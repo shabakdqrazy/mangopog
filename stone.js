@@ -8,7 +8,7 @@ class Stone{
      }
      this.body = Bodies.circle(x,y,radius,options)
      this.radius = radius
-     this.image = loadImage("image/stone.png")
+     this.image = loadImage("images/stone.png")
      World.add(world,this.body);
 
     } 

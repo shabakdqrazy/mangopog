@@ -1,10 +1,12 @@
+
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 const Render = Matter.Render;
 const Constraint=Matter.Constraint;
-
+var treeObj, stoneObj,groundObject, launcherObject;
+var mango1;
 var world,boy;
 
 function preload(){
@@ -16,35 +18,39 @@ function setup() {
 	engine = Engine.create();
 	world = engine.world;
 
-	ground=new Ground(700,550,1500,20);
-	tree= new Tree(900,300,300,550);
-	mango1=new Mango(900,100,30);
-	mango2=new Mango(880,150,30);
-	mango3=new Mango(850,250,30);
-	mango4=new Mango(950,230,30);
-	mango5=new Mango(930,170,30);
-	mango6=new Mango(810,180,30);
-	
-	stone = new Stone(200,480,100)
+	mango1=new Mango(1100,100,30);
+	mango2=new Mango(950,150,30);
+	mango3=new Mango(1000,250,30);
+	mango4=new Mango(1100,200,30);
+	mango5=new Mango(1200,170,30);
+	mango6=new Mango(1000,125,30);
 
-	slingshot=new SlingShot(stone.body,{x:125,y:450})
+	stone = new Stone(200,480,50)
 
+	slingshot=new SlingShot(stone.body,{x:140,y:420})
+
+	treeObj=new Tree(1050,580);
+	groundObject=new Ground(width/2,600,width,20);
 	
 	Engine.run(engine);
+
+	detecollision(stone,mango1)
+	detecollision(stone,mango2)
+	detecollision(stone,mango3)
+	detecollision(stone,mango4)
+	detecollision(stone,mango5)
+	detecollision(stone,mango6)
 
 }
 
 function draw() {
 
   background(230);
+  //Add code for displaying text here!
+  image(boy ,100,340,200,300);
   
-  imageMode(CENTER)
-  image(boy ,200,480,200,300);
   stone.display();
-
-  fill("brown")
-  ground.display();
-  tree.display();
+  treeObj.display();
   mango1.display();
   mango2.display();
   mango3.display();
@@ -54,23 +60,19 @@ function draw() {
 
 slingshot.display();
 
-  detecollision(stone,mango1)
-  detecollision(stone,mango2)
-  detecollision(stone,mango3)
-  detecollision(stone,mango4)
-  detecollision(stone,mango5)
-  detecollision(stone,mango6)
-
   
 
- }
 
- function mouseDragged(){
+  groundObject.display();
+}
+
+
+function mouseDragged(){
 	Matter.Body.setPosition(stone.body,{x:mouseX,y:mouseY})
  }
 
  function mouseReleased(){
-	slingShot.fly();
+	slingshot.fly();
  }
 
  
